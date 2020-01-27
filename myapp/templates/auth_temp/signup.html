@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h2>Register Form</h2>
+        {% for message in form.name.errors %}
+            <div>{{ message }}</div>
+        {% endfor %}
+
+        {% for message in form.email.error%}
+            <div>{{ message }}</div>
+        {% endfor %}
+
+        <form action="/valid/signup" method = "POST">
+            <fieldset>
+                <legend>Register</legend>
+                {{ form.hidden_tag() }}
+
+                <div>
+                    {{ form.name.label }} <br>
+                    {{ form.name }}<br><br>
+                    {{ form.email.label }}<br>
+                    {{ form.email }} <br><br>
+                    {{ form.password.label }}<br>
+                    {{ form.password }}
+                    <br><br>
+                    {{ form.submit}}
+                </div>
+                <br>
+            <div>{{ message }}</div>
+            </fieldset>    
+        </form>
+    </body>
+</html>

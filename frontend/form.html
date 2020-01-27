@@ -1,0 +1,50 @@
+<label for = "name">Email :</label>
+<input type="text" id="email", placeholder="enter your email"><br>
+<label for = "name">Password :</label>
+<input type="password" id="password", placeholder="enter your password"><br>
+<button type="submit" id="submit">Login</button><br>
+<button type="submit" id="task">Fetch Tasks</button>
+
+<script>
+    var button = document.getElementById('submit');
+    var taskButton = document.getElementById('task');
+    button.addEventListener('click',()=>{
+        var email = document.getElementById('email');
+        var password = document.getElementById('password');
+        var data = {email:email.value,password:password.value}
+        console.log(data)
+        var headers = new Headers()
+        fetch('http://127.0.0.1:3000/valid/login',{
+        method:"POST",
+        headers:{
+            'Content-Type':'application/json',    
+        },
+        body: JSON.stringify(data)    
+        }).then((res)=>res.json()).then((data)=>{
+            if (data.status == 200) {
+                localStorage.setItem('Token',data.token)
+                console.log(data.status,"status")
+                alert("Success")
+            }
+            else {
+                alert("invalid credit")
+            }
+        })
+    })
+    taskButton.addEventListener('click',()=>{
+        var headers = new Headers()
+        var token = localStorage.getItem('Token')
+        headers.append('Authorization' , "Bearer "+token )
+        fetch('http://127.0.0.1:3000/task/',{
+        method:"GET",
+        headers:headers
+    }).then((res)=>res.json()).then((data)=>{
+        console.log("Data",data)
+
+    })
+})
+var baseurl = "http://127.0.0.1:3000/task"
+function fetchapi(){
+    
+}
+</script>
